@@ -1,37 +1,24 @@
 let wordId = 0;
-let wrds = [{ sentence : "", uniqeId: wordId }];
-let hidden = false;
+let words = [{ sentence : "", uniqeId: wordId }];
 
-
-function searchIt() {
+function searchWord() {
     let wordWalue = document.getElementById("form1").value
-    let searchSentence = wrds.find((word) => word.sentence === wordWalue);  
+    let searchSentence = words.find((word) => word.sentence === wordWalue);  
     if (searchSentence === undefined) {
-        hidden = true;
+        document.getElementById('message').innerText = 'This word is NOT in the list! Du you want to add?'; 
+    } else {
+        document.getElementById('message').innerText = 'This word is already in the list';
     }
-    hidden = !searchSentence; 
-    return(action());
 }
 
 function addWord() {
     let wordWalue = document.getElementById("form1").value;
-    let wOrd = { sentence: wordWalue, uniqeId: wordId + 1 };  
+    let newWord = { sentence: wordWalue, uniqeId: wordId + 1 };  
     document.getElementById("addedWords").innerHTML += `
     <div class="container">
-    ${wOrd.sentence}
+        ${newWord.sentence}
     </div>`;  
-    wrds.push(wOrd);
+    words.push(newWord);
     ++wordId;
     document.getElementById("form1").value = "";
-    return(action());
-}
-
-function action() {
-    if (hidden) {
-        document.getElementById('addBtn').style.display = 'block'; 
-        document.getElementById('message').innerText = 'This word is NOT in the list! Du you want to add?'; 
-    } else {
-        document.getElementById('addBtn').style.display = 'none'; 
-        document.getElementById('message').innerText = 'This word is already in the list';
-    }
 }
